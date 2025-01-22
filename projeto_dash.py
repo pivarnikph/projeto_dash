@@ -3,9 +3,6 @@ import pandas as pd
 import plotly.graph_objs as go
 import plotly.express as px
 
-# Install required dependencies
-!{sys.executable} -m pip install plotly
-
 # Configuração da página
 st.set_page_config(page_title="Painel de Emendas Parlamentares 2025", layout="wide")
 
@@ -66,7 +63,7 @@ df = carregar_dados()
 # Título da aplicação
 st.markdown("""
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <img src="https://i.ibb.co/71dBWCx/image-2.png" width="200" alt="Logo">
+        <img src="https://example.com/logo.png" width="100" alt="Logo">
         <h1>Painel de Emendas Parlamentares 2025</h1>
     </div>
 """, unsafe_allow_html=True)
