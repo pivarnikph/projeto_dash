@@ -63,7 +63,7 @@ df = carregar_dados()
 st.markdown("""
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <img src="https://i.ibb.co/71dBWCx/image-2.png" width="200" alt="Logo">
-        <h1 style="text-align: center; margin-bottom: 0;">Painel de Emendas Parlamentares 2025</h1>
+        <h1>Painel de Emendas Parlamentares 2025</h1>
     </div>
 """, unsafe_allow_html=True)
 
