@@ -3,6 +3,9 @@ import pandas as pd
 import plotly.graph_objs as go
 import plotly.express as px
 
+# Install required dependencies
+!{sys.executable} -m pip install plotly
+
 # Configuração da página
 st.set_page_config(page_title="Painel de Emendas Parlamentares 2025", layout="wide")
 
