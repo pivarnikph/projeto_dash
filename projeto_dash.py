@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objs as go
-import plotly.express as px
+import plotly.graph_objects as go
 
 # Configuração da página
 st.set_page_config(page_title="Painel de Emendas Parlamentares 2025", layout="wide")
@@ -63,8 +62,8 @@ df = carregar_dados()
 # Título da aplicação
 st.markdown("""
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <img src="https://example.com/logo.png" width="100" alt="Logo">
-        <h1>Painel de Emendas Parlamentares 2025</h1>
+        <img src="https://i.ibb.co/71dBWCx/image-2.png" width="200" alt="Logo">
+        <h1 style="text-align: center; margin-bottom: 0;">Painel de Emendas Parlamentares 2025</h1>
     </div>
 """, unsafe_allow_html=True)
 
@@ -134,24 +133,23 @@ with col1:
     # Preparar dados para o gráfico de pizza
     valores_por_area = df_filtrado.groupby('area')['valor'].sum().reset_index()
     
-    # Gráfico de pizza interativo com Plotly
-    fig_area = px.pie(
-        valores_por_area, 
-        values='valor', 
-        names='area',
-        title='Distribuição de Valores por Área',
-        hover_data=['valor'],
-        labels={'valor': 'Valor'},
+    # Gráfico de pizza interativo com Streamlit
+    st.plotly_chart(
+        go.Figure(
+            data=[go.Pie(
+                labels=valores_por_area['area'],
+                values=valores_por_area['valor'],
+                hole=0.3,
+                marker_colors=[f'#{int(0x438E80 - 0x1FB625 * i/len(valores_por_area))}' for i in range(len(valores_por_area))]
+            )],
+            layout={
+                'title': 'Distribuição de Valores por Área',
+                'paper_bgcolor': 'rgba(0,0,0,0)',
+                'plot_bgcolor': 'rgba(0,0,0,0)'
+            }
+        ),
+        use_container_width=True
     )
-    fig_area.update_traces(
-        texttemplate='%{label}<br>%{percent}',
-        hovertemplate='<b>%{label}</b><br>Valor: R$ %{value:,.2f}<br>Percentual: %{percent}<extra></extra>',
-    )
-    fig_area.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
-    st.plotly_chart(fig_area, use_container_width=True)
 
 # Gráfico de Top 10 Deputados por Quantidade de Emendas
 with col2:
@@ -159,24 +157,24 @@ with col2:
     # Preparar dados para o gráfico de barras
     top_deputados = df_filtrado.groupby('nomeDeputado')['numero'].count().nlargest(10).reset_index()
     
-    # Gráfico de barras interativo com Plotly
-    fig_deputados = px.bar(
-        top_deputados, 
-        x='nomeDeputado', 
-        y='numero', 
-        title='Top 10 Deputados por Quantidade de Emendas',
-        labels={'nomeDeputado': 'Deputado', 'numero': 'Quantidade de Emendas'},
+    # Gráfico de barras interativo com Streamlit
+    st.plotly_chart(
+        go.Figure(
+            data=[go.Bar(
+                x=top_deputados['nomeDeputado'],
+                y=top_deputados['numero'],
+                marker_color=['#438E80', '#41848D', '#3F7A9A', '#3D70A7', '#3B66B4', '#395CC1', '#3752CE', '#3448DB', '#3133E8', '#2F29F5']
+            )],
+            layout={
+                'title': 'Top 10 Deputados por Quantidade de Emendas',
+                'xaxis_title': 'Deputado',
+                'yaxis_title': 'Quantidade de Emendas',
+                'paper_bgcolor': 'rgba(0,0,0,0)',
+                'plot_bgcolor': 'rgba(0,0,0,0)'
+            }
+        ),
+        use_container_width=True
     )
-    fig_deputados.update_traces(
-        hovertemplate='<b>%{x}</b><br>Quantidade de Emendas: %{y}<extra></extra>',
-    )
-    fig_deputados.update_layout(
-        xaxis_title='Deputado',
-        yaxis_title='Quantidade de Emendas',
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
-    st.plotly_chart(fig_deputados, use_container_width=True)
 
 # Tabela detalhada
 st.header("Detalhamento de Emendas")
@@ -205,4 +203,4 @@ with col4:
 
 # Rodapé
 st.markdown("---")
-st.markdown("**Painel de Emendas Parlamentares 2025 - Análise Interativa**")
+st.markdown("**Painel de Emendas Parlamentares 2025 - Subsecretaria Central de Orçamento**")
